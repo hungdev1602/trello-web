@@ -28,6 +28,7 @@ function Card({ card }) {
     transform: CSS.Translate.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : undefined, //nếu đang kéo thì mờ đi 1 nửa
+    border: isDragging ? "1px solid #2ecc71" : undefined, //nếu đang kéo thì mờ đi 1 nửa
   };
   const shouldShowCardActions = () => {
     return (
