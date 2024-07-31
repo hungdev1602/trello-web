@@ -24,7 +24,7 @@ import { CSS } from "@dnd-kit/utilities";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 
-function Column({ column }) {
+function Column({ column, createNewCard }) {
   const {
     attributes,
     listeners,
@@ -62,13 +62,19 @@ function Column({ column }) {
 
   const [newCardTitle, setNewCardTitle] = useState("");
 
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       toast.error("Please enter Card title", { position: "bottom-right" });
       return;
     }
-    // console.log(newCardTitle);
-    // Gọi API ở đây...
+
+    // Tạo dữ liệu Card để gọi API
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id,
+    };
+
+    await createNewCard(newCardData);
 
     // Đóng lại trạng thái thêm Card mới & Clear Input
     toggleOpenNewCardForm();
