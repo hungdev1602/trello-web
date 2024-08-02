@@ -38,6 +38,7 @@ function BoardContent({
   moveColumns,
   moveCardInTheSameColumn,
   moveCardInTheDifferentColumn,
+  deleteColumnDetails,
 }) {
   // https://docs.dndkit.com/api-documentation/sensors
   // Nếu dùng PointerSensor mặc định thì phải kết hợp thuộc tính CSS touch-action: "none" ở những phần kéo thả
@@ -457,6 +458,7 @@ function BoardContent({
           columns={orderedColumns}
           createNewColumn={createNewColumn}
           createNewCard={createNewCard}
+          deleteColumnDetails={deleteColumnDetails}
         />
         <DragOverlay dropAnimation={customDropAnimation}>
           {!activeDragItemType && null}
