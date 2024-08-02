@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
@@ -11,6 +12,7 @@ import {
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
+// eslint-disable-next-line react/prop-types
 function ListColumns({ columns, createNewColumn, createNewCard }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false);
   const toggleOpenNewColumnForm = () =>
@@ -18,7 +20,7 @@ function ListColumns({ columns, createNewColumn, createNewCard }) {
 
   const [newColumnTitle, setNewColumnTitle] = useState("");
 
-  const addNewColumn = async () => {
+  const addNewColumn = () => {
     if (!newColumnTitle) {
       toast.error("Please enter Column title");
       return;
@@ -29,7 +31,7 @@ function ListColumns({ columns, createNewColumn, createNewCard }) {
       title: newColumnTitle,
     };
 
-    await createNewColumn(newColumnData);
+    createNewColumn(newColumnData);
 
     // Đóng lại trạng thái thêm Column mới & Clear Input
     toggleOpenNewColumnForm();
