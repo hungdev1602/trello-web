@@ -37,6 +37,7 @@ function BoardContent({
   createNewCard,
   moveColumns,
   moveCardInTheSameColumn,
+  moveCardInTheDifferentColumn,
 }) {
   // https://docs.dndkit.com/api-documentation/sensors
   // Nếu dùng PointerSensor mặc định thì phải kết hợp thuộc tính CSS touch-action: "none" ở những phần kéo thả
@@ -81,7 +82,7 @@ function BoardContent({
     );
   };
 
-  // Function chung xử lý việc Cập nhật lại state trong trường hợp di chuyển Card giữa 2 Column khác nhau
+  // Khởi tạo Function chung xử lý việc Cập nhật lại state trong trường hợp di chuyển Card giữa 2 Column khác nhau
   const moveCardBetweenDifferentColumns = (
     overColumn,
     overCardId,
@@ -89,7 +90,8 @@ function BoardContent({
     over,
     activeColumn,
     activeDraggingCardId,
-    activeDraggingCardData
+    activeDraggingCardData,
+    triggerFrom
   ) => {
     setOrderedColumns((prevColumns) => {
       // Tìm vị trí (index) của cái overCard trong column đích (nơi mà activeCard sắp được thả)
@@ -166,6 +168,17 @@ function BoardContent({
           (card) => card._id
         );
       }
+
+      // Nếu function này dc gọi từ handleDragEnd nghĩa là đã kéo thả xong
+      if (triggerFrom === "handleDragEnd") {
+        moveCardInTheDifferentColumn(
+          activeDraggingCardId,
+          oldColumnWhenDraggingCard._id,
+          nextOverColumn._id,
+          nextColumns
+        );
+      }
+
       return nextColumns;
     });
   };
@@ -224,7 +237,8 @@ function BoardContent({
         over,
         activeColumn,
         activeDraggingCardId,
-        activeDraggingCardData
+        activeDraggingCardData,
+        "handleDragOver"
       );
     }
   };
@@ -266,7 +280,8 @@ function BoardContent({
           over,
           activeColumn,
           activeDraggingCardId,
-          activeDraggingCardData
+          activeDraggingCardData,
+          "handleDragEnd"
         );
       } else {
         //hành động kéo thả card trong cùng một column
